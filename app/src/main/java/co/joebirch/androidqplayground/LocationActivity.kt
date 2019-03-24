@@ -2,9 +2,9 @@ package co.joebirch.androidqplayground
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.support.v4.app.ActivityCompat
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import kotlinx.android.synthetic.main.activity_location.*
 
 class LocationActivity : AppCompatActivity() {
@@ -34,12 +34,11 @@ class LocationActivity : AppCompatActivity() {
     }
 
     private fun requestPermission() {
-        val permissionAccessCoarseLocationApproved = ActivityCompat
-            .checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) ==
-                PackageManager.PERMISSION_GRANTED
+        val hasLocationPermission = ActivityCompat.checkSelfPermission(this,
+            Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
 
-        if (permissionAccessCoarseLocationApproved) {
-            handlePermissionForForeground()
+        if (hasLocationPermission) {
+            // handle location update
         } else {
             ActivityCompat.requestPermissions(this,
                 arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION), REQUEST_CODE_FOREGROUND)
@@ -47,30 +46,20 @@ class LocationActivity : AppCompatActivity() {
     }
 
     private fun requestBackgroundPermission() {
-        val permissionAccessCoarseLocationApproved = ActivityCompat
-            .checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) ==
-                PackageManager.PERMISSION_GRANTED
+        val hasForegroundLocationPermission = ActivityCompat.checkSelfPermission(this,
+            Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
 
-        if (permissionAccessCoarseLocationApproved) {
-            val backgroundLocationPermissionApproved = ActivityCompat
-                .checkSelfPermission(this, Manifest.permission.ACCESS_BACKGROUND_LOCATION) ==
-                    PackageManager.PERMISSION_GRANTED
+        if (hasForegroundLocationPermission) {
+            val hasBackgroundLocationPermission = ActivityCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED
 
-            if (backgroundLocationPermissionApproved) {
-                // App can access location both in the foreground and in the background.
-                // Start your service that doesn't have a foreground service type
-                // defined.
+            if (hasBackgroundLocationPermission) {
+                // handle location update
             } else {
-                // App can only access location in the foreground. Display a dialog
-                // warning the user that your app must have all-the-time access to
-                // location in order to function properly. Then, request background
-                // location.
                 ActivityCompat.requestPermissions(this,
                     arrayOf(Manifest.permission.ACCESS_BACKGROUND_LOCATION), REQUEST_CODE_BACKGROUND)
             }
         } else {
-            // App doesn't have access to the user's location at all. Make full request
-            // for permission.
             ActivityCompat.requestPermissions(this,
                 arrayOf(Manifest.permission.ACCESS_COARSE_LOCATION,
                     Manifest.permission.ACCESS_BACKGROUND_LOCATION), REQUEST_CODE_BACKGROUND)

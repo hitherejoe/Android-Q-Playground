@@ -1,9 +1,9 @@
 package co.joebirch.androidqplayground
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.Settings
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_settings_panel.*
 
 class SettingsPanelActivity : AppCompatActivity() {

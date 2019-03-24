@@ -1,8 +1,8 @@
 package co.joebirch.androidqplayground
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -17,5 +17,8 @@ class MainActivity : AppCompatActivity() {
         button_location.setOnClickListener {
             startActivity(Intent(this, LocationActivity::class.java))
         }
+
+        val mSharingShortcutsManager = SharingShortcutsManager()
+        mSharingShortcutsManager.pushDirectShareTargets(this)
     }
 }

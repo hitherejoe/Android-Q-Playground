@@ -18,10 +18,31 @@
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
+
+
+            <meta-data android:name="android.app.shortcuts"
+                       android:resource="@xml/shortcuts" />
         </activity>
 
         <activity android:name=".SettingsPanelActivity"/>
         <activity android:name=".LocationActivity"/>
+        <activity android:name=".WifiConnectActivity"/>
+        <activity android:name=".ShareActivity">
+            <!-- This activity can respond to Intents of type SEND -->
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+            <!-- Only needed if you import the sharetarget AndroidX library that
+                 provides backwards compatibility with the old DirectShare API.
+                 The activity that receives the Sharing Shortcut intent needs to be
+                 taken into account with this chooser target provider. -->
+            <meta-data
+                    android:name="android.service.chooser.chooser_target_service"
+                    android:value="androidx.sharetarget.ChooserTargetServiceCompat" />
+
+        </activity>
 
     </application>
 
